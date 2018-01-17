@@ -87,21 +87,6 @@ void cft_fasttext_train(fasttext_t handle, int argc, char** argv) {
     ((FastText*)handle)->train(a);
 }
 
-// Higher level APIs
-
-void cft_train(int argc, char** argv) {
-    std::vector<std::string> args(argv, argv + argc);
-    Args a = Args();
-    a.parseArgs(args);
-    FastText fasttext;
-    fasttext.train(a);
-    fasttext.saveModel();
-    fasttext.saveVectors();
-    if (a.saveOutput) {
-        fasttext.saveOutput();
-    }
-}
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

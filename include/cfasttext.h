@@ -40,6 +40,10 @@ CFASTTEXT_API void cft_fasttext_load_vectors(fasttext_t handle, const char* file
 CFASTTEXT_API void cft_fasttext_train(fasttext_t handle, int argc, char** argv);
 // CFASTTEXT_API void cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold);
 
+// Higher level APIs
+
+CFASTTEXT_API void cft_train(int argc, char** argv);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

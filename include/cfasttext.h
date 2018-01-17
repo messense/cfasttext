@@ -2,6 +2,7 @@
 #define CFASTTEXT_CFASTTEXT_H
 
 #include <stdint.h>
+#include <stddef.h>
 
 #ifdef __cplusplus
 extern "C" {
@@ -20,6 +21,14 @@ extern "C" {
 
 typedef void* fasttext_t;
 typedef void* fasttext_args_t;
+typedef struct {
+    float prob;
+    char* label;
+} fasttext_prediction_t;
+typedef struct {
+    fasttext_prediction_t* predictions;
+    size_t length;
+} fasttext_predictions_t;
 
 CFASTTEXT_API fasttext_args_t cft_args_parse(int argc, char** argv);
 CFASTTEXT_API void cft_args_free(fasttext_args_t handle);
@@ -38,7 +47,8 @@ CFASTTEXT_API void cft_fasttext_analogies(fasttext_t handle, int32_t k);
 CFASTTEXT_API void cft_fasttext_train_thread(fasttext_t handle, int32_t n);
 CFASTTEXT_API void cft_fasttext_load_vectors(fasttext_t handle, const char* filename);
 CFASTTEXT_API void cft_fasttext_train(fasttext_t handle, int argc, char** argv);
-// CFASTTEXT_API void cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold);
+CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold);
+CFASTTEXT_API void cft_fasttext_predictions_free(fasttext_predictions_t* predictions);
 
 #ifdef __cplusplus
 }

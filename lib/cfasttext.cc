@@ -87,6 +87,31 @@ void cft_fasttext_train(fasttext_t handle, int argc, char** argv) {
     ((FastText*)handle)->train(a);
 }
 
+fasttext_predictions_t* cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold) {
+    std::vector<std::pair<fasttext::real, std::string>> predictions;
+    std::stringstream ioss(text);
+    ((FastText*)handle)->predict(ioss, k, predictions, threshold);
+    size_t len = predictions.size();
+    fasttext_predictions_t* ret = static_cast<fasttext_predictions_t*>(malloc(sizeof(fasttext_predictions_t)));
+    ret->length = len;
+    fasttext_prediction_t* c_preds = static_cast<fasttext_prediction_t*>(malloc(sizeof(fasttext_prediction_t) * len));
+    for (size_t i = 0; i < len; i++) {
+        c_preds[i].label = strdup(predictions[i].second.c_str());
+        c_preds[i].prob = std::exp(predictions[i].first);
+    }
+    ret->predictions = c_preds;
+    return ret;
+}
+
+void cft_fasttext_predictions_free(fasttext_predictions_t* predictions) {
+    for (size_t i = 0; i < predictions->length; i++) {
+        fasttext_prediction_t pred = predictions->predictions[i];
+        free(pred.label);
+    }
+    free(predictions->predictions);
+    free(predictions);
+}
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

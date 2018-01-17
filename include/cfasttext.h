@@ -19,9 +19,10 @@ extern "C" {
 #define CFASTTEXT_FALSE          (0)
 
 typedef void* fasttext_t;
-// typedef void* fasttext_args_t;
+typedef void* fasttext_args_t;
 
-// CFASTTEXT_API fasttext_args_t cft_fasttext_parse_args(int argc, char** argv);
+CFASTTEXT_API fasttext_args_t cft_fasttext_parse_args(int argc, char** argv);
+CFASTTEXT_API void cft_fasttext_args_free(fasttext_args_t handle);
 
 CFASTTEXT_API fasttext_t cft_fasttext_new(void);
 CFASTTEXT_API void cft_fasttext_free(fasttext_t handle);

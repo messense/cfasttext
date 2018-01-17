@@ -112,6 +112,21 @@ void cft_fasttext_predictions_free(fasttext_predictions_t* predictions) {
     free(predictions);
 }
 
+void cft_fasttext_quantize(fasttext_t handle, const char* input, bool qout, int32_t cutoff, bool retrain, int epoch, double lr, int thread, int verbose, int32_t dsub, bool qnorm) {
+    Args qa = Args();
+    qa.input = input;
+    qa.qout = qout;
+    qa.cutoff = cutoff;
+    qa.retrain = retrain;
+    qa.epoch = epoch;
+    qa.lr = lr;
+    qa.thread = thread;
+    qa.verbose = verbose;
+    qa.dsub = dsub;
+    qa.qnorm = qnorm;
+    ((FastText*)handle)->quantize(qa);
+}
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

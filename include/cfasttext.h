@@ -49,6 +49,7 @@ CFASTTEXT_API void cft_fasttext_load_vectors(fasttext_t handle, const char* file
 CFASTTEXT_API void cft_fasttext_train(fasttext_t handle, int argc, char** argv);
 CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold);
 CFASTTEXT_API void cft_fasttext_predictions_free(fasttext_predictions_t* predictions);
+CFASTTEXT_API void cft_fasttext_quantize(fasttext_t handle, const char* input, bool qout, int32_t cutoff, bool retrain, int epoch, double lr, int thread, int verbose, int32_t dsub, bool qnorm);
 
 #ifdef __cplusplus
 }

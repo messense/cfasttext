@@ -1,4 +1,4 @@
-# cfasttest
+# cfasttext
 
 A fastText C wrapper
 

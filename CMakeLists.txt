@@ -10,7 +10,7 @@ endif()
 set(CMAKE_MACOSX_RPATH 1)
 set (CMAKE_POSITION_INDEPENDENT_CODE ON)
 
-add_subdirectory(fastText EXCLUDE_FROM_ALL)
+add_subdirectory(fasttext EXCLUDE_FROM_ALL)
 
 include_directories(
     ${PROJECT_SOURCE_DIR}/fasttext/src

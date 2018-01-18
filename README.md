@@ -1,5 +1,7 @@
 # cfasttext
 
+[![Build Status](https://travis-ci.org/messense/cfasttext.svg?branch=master)](https://travis-ci.org/messense/cfasttext)
+
 A fastText C wrapper
 
 ## License

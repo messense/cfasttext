@@ -15,15 +15,17 @@ using namespace fasttext;
 extern "C" {
 #endif /* __cplusplus */
 
-fasttext_args_t cft_args_parse(int argc, char** argv) {
+fasttext_args_t cft_args_new(void) {
+    return (fasttext_args_t)(new Args());
+}
+
+void cft_args_parse(fasttext_args_t handle, int argc, char** argv) {
     std::vector<std::string> args(argv, argv + argc);
-    Args* handle = new Args();
-    handle->parseArgs(args);
-    return (fasttext_args_t)handle;
+    ((Args*)handle)->parseArgs(args);
 }
 
 void cft_args_free(fasttext_args_t handle) {
-    Args* x = (Args*) handle;
+    Args* x = (Args*)handle;
     delete x;
 }
 

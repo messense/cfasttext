@@ -82,11 +82,9 @@ int32_t cft_fasttext_get_subword_id(fasttext_t handle, const char* word) {
     return ((FastText*)handle)->getSubwordId(word);
 }
 
-void cft_fasttext_train(fasttext_t handle, int argc, char** argv) {
-    std::vector<std::string> args(argv, argv + argc);
-    Args a = Args();
-    a.parseArgs(args);
-    ((FastText*)handle)->train(a);
+void cft_fasttext_train(fasttext_t handle, fasttext_args_t args) {
+    Args* a = (Args*)args;
+    ((FastText*)handle)->train(*a);
 }
 
 fasttext_predictions_t* cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold) {

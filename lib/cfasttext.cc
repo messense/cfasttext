@@ -15,6 +15,10 @@ using namespace fasttext;
 extern "C" {
 #endif /* __cplusplus */
 
+void cft_str_free(char* s) {
+    free(s);
+}
+
 fasttext_args_t cft_args_new(void) {
     return (fasttext_args_t)(new Args());
 }
@@ -27,6 +31,24 @@ void cft_args_parse(fasttext_args_t handle, int argc, char** argv) {
 void cft_args_free(fasttext_args_t handle) {
     Args* x = (Args*)handle;
     delete x;
+}
+
+char* cft_args_get_input(fasttext_args_t handle) {
+    auto input = ((Args*)handle)->input;
+    return strdup(input.c_str());
+}
+
+void cft_args_set_input(fasttext_args_t handle, const char* input) {
+    ((Args*)handle)->input = input;
+}
+
+char* cft_args_get_output(fasttext_args_t handle) {
+    auto output = ((Args*)handle)->output;
+    return strdup(output.c_str());
+}
+
+void cft_args_set_output(fasttext_args_t handle, const char* output) {
+    ((Args*)handle)->output = output;
 }
 
 fasttext_t cft_fasttext_new(void) {

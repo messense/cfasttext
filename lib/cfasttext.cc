@@ -19,97 +19,97 @@ void cft_str_free(char* s) {
     free(s);
 }
 
-fasttext_args_t cft_args_new(void) {
-    return (fasttext_args_t)(new Args());
+fasttext_args_t* cft_args_new(void) {
+    return (fasttext_args_t*)(new Args());
 }
 
-void cft_args_parse(fasttext_args_t handle, int argc, char** argv) {
+void cft_args_parse(fasttext_args_t* handle, int argc, char** argv) {
     std::vector<std::string> args(argv, argv + argc);
     ((Args*)handle)->parseArgs(args);
 }
 
-void cft_args_free(fasttext_args_t handle) {
+void cft_args_free(fasttext_args_t* handle) {
     Args* x = (Args*)handle;
     delete x;
 }
 
-char* cft_args_get_input(fasttext_args_t handle) {
+char* cft_args_get_input(fasttext_args_t* handle) {
     auto input = ((Args*)handle)->input;
     return strdup(input.c_str());
 }
 
-void cft_args_set_input(fasttext_args_t handle, const char* input) {
+void cft_args_set_input(fasttext_args_t* handle, const char* input) {
     ((Args*)handle)->input = input;
 }
 
-char* cft_args_get_output(fasttext_args_t handle) {
+char* cft_args_get_output(fasttext_args_t* handle) {
     auto output = ((Args*)handle)->output;
     return strdup(output.c_str());
 }
 
-void cft_args_set_output(fasttext_args_t handle, const char* output) {
+void cft_args_set_output(fasttext_args_t* handle, const char* output) {
     ((Args*)handle)->output = output;
 }
 
-fasttext_t cft_fasttext_new(void) {
-    return (fasttext_t)(new FastText());
+fasttext_t* cft_fasttext_new(void) {
+    return (fasttext_t*)(new FastText());
 }
 
-void cft_fasttext_free(fasttext_t handle) {
+void cft_fasttext_free(fasttext_t* handle) {
     FastText* x = (FastText*)handle;
     delete x;
 }
 
-void cft_fasttext_load_model(fasttext_t handle, const char* filename) {
+void cft_fasttext_load_model(fasttext_t* handle, const char* filename) {
     ((FastText*)handle)->loadModel(filename);
 }
 
-void cft_fasttext_save_model(fasttext_t handle) {
+void cft_fasttext_save_model(fasttext_t* handle) {
     ((FastText*)handle)->saveModel();
 }
 
-void cft_fasttext_save_output(fasttext_t handle) {
+void cft_fasttext_save_output(fasttext_t* handle) {
     ((FastText*)handle)->saveOutput();
 }
 
-void cft_fasttext_save_vectors(fasttext_t handle) {
+void cft_fasttext_save_vectors(fasttext_t* handle) {
     ((FastText*)handle)->saveVectors();
 }
 
-int cft_fasttext_get_dimension(fasttext_t handle) {
+int cft_fasttext_get_dimension(fasttext_t* handle) {
     return ((FastText*)handle)->getDimension();
 }
 
-bool cft_fasttext_is_quant(fasttext_t handle) {
+bool cft_fasttext_is_quant(fasttext_t* handle) {
     return ((FastText*)handle)->isQuant();
 }
 
-void cft_fasttext_analogies(fasttext_t handle, int32_t k) {
+void cft_fasttext_analogies(fasttext_t* handle, int32_t k) {
     ((FastText*)handle)->analogies(k);
 }
 
-void cft_fasttext_train_thread(fasttext_t handle, int32_t n) {
+void cft_fasttext_train_thread(fasttext_t* handle, int32_t n) {
     ((FastText*)handle)->trainThread(n);
 }
 
-void cft_fasttext_load_vectors(fasttext_t handle, const char* filename) {
+void cft_fasttext_load_vectors(fasttext_t* handle, const char* filename) {
     ((FastText*)handle)->loadVectors(filename);
 }
 
-int32_t cft_fasttext_get_word_id(fasttext_t handle, const char* word) {
+int32_t cft_fasttext_get_word_id(fasttext_t* handle, const char* word) {
     return ((FastText*)handle)->getWordId(word);
 }
 
-int32_t cft_fasttext_get_subword_id(fasttext_t handle, const char* word) {
+int32_t cft_fasttext_get_subword_id(fasttext_t* handle, const char* word) {
     return ((FastText*)handle)->getSubwordId(word);
 }
 
-void cft_fasttext_train(fasttext_t handle, fasttext_args_t args) {
+void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args) {
     Args* a = (Args*)args;
     ((FastText*)handle)->train(*a);
 }
 
-fasttext_predictions_t* cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold) {
+fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold) {
     std::vector<std::pair<fasttext::real, std::string>> predictions;
     std::stringstream ioss(text);
     ((FastText*)handle)->predict(ioss, k, predictions, threshold);
@@ -134,7 +134,7 @@ void cft_fasttext_predictions_free(fasttext_predictions_t* predictions) {
     free(predictions);
 }
 
-void cft_fasttext_quantize(fasttext_t handle, fasttext_args_t args) {
+void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args) {
     Args* a = (Args*)args;
     ((FastText*)handle)->quantize(*a);
 }

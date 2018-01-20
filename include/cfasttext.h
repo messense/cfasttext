@@ -20,8 +20,8 @@ extern "C" {
 #define FASTTEXT_TRUE           (1)
 #define CFASTTEXT_FALSE          (0)
 
-typedef void* fasttext_t;
-typedef void* fasttext_args_t;
+typedef struct fasttext_t fasttext_t;
+typedef struct fasttext_args_t fasttext_args_t;
 typedef struct {
     float prob;
     char* label;
@@ -32,31 +32,31 @@ typedef struct {
 } fasttext_predictions_t;
 
 CFASTTEXT_API void cft_str_free(char* s);
-CFASTTEXT_API fasttext_args_t cft_args_new(void);
-CFASTTEXT_API void cft_args_parse(fasttext_args_t handle, int argc, char** argv);
-CFASTTEXT_API void cft_args_free(fasttext_args_t handle);
-CFASTTEXT_API char* cft_args_get_input(fasttext_args_t handle);
-CFASTTEXT_API void cft_args_set_input(fasttext_args_t handle, const char* input);
-CFASTTEXT_API char* cft_args_get_output(fasttext_args_t handle);
-CFASTTEXT_API void cft_args_set_output(fasttext_args_t handle, const char* output);
+CFASTTEXT_API fasttext_args_t* cft_args_new(void);
+CFASTTEXT_API void cft_args_parse(fasttext_args_t* handle, int argc, char** argv);
+CFASTTEXT_API void cft_args_free(fasttext_args_t* handle);
+CFASTTEXT_API char* cft_args_get_input(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_input(fasttext_args_t* handle, const char* input);
+CFASTTEXT_API char* cft_args_get_output(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_output(fasttext_args_t* handle, const char* output);
 
-CFASTTEXT_API fasttext_t cft_fasttext_new(void);
-CFASTTEXT_API void cft_fasttext_free(fasttext_t handle);
-CFASTTEXT_API void cft_fasttext_load_model(fasttext_t handle, const char* filename);
-CFASTTEXT_API void cft_fasttext_save_model(fasttext_t handle);
-CFASTTEXT_API void cft_fasttext_save_output(fasttext_t handle);
-CFASTTEXT_API void cft_fasttext_save_vectors(fasttext_t handle);
-CFASTTEXT_API int cft_fasttext_get_dimension(fasttext_t handle);
-CFASTTEXT_API int32_t cft_fasttext_get_word_id(fasttext_t handle, const char* word);
-CFASTTEXT_API int32_t cft_fasttext_get_subword_id(fasttext_t handle, const char* word);
-CFASTTEXT_API bool cft_fasttext_is_quant(fasttext_t handle);
-CFASTTEXT_API void cft_fasttext_analogies(fasttext_t handle, int32_t k);
-CFASTTEXT_API void cft_fasttext_train_thread(fasttext_t handle, int32_t n);
-CFASTTEXT_API void cft_fasttext_load_vectors(fasttext_t handle, const char* filename);
-CFASTTEXT_API void cft_fasttext_train(fasttext_t handle, fasttext_args_t args);
-CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict(fasttext_t handle, const char* text, int32_t k, float threshold);
+CFASTTEXT_API fasttext_t* cft_fasttext_new(void);
+CFASTTEXT_API void cft_fasttext_free(fasttext_t* handle);
+CFASTTEXT_API void cft_fasttext_load_model(fasttext_t* handle, const char* filename);
+CFASTTEXT_API void cft_fasttext_save_model(fasttext_t* handle);
+CFASTTEXT_API void cft_fasttext_save_output(fasttext_t* handle);
+CFASTTEXT_API void cft_fasttext_save_vectors(fasttext_t* handle);
+CFASTTEXT_API int cft_fasttext_get_dimension(fasttext_t* handle);
+CFASTTEXT_API int32_t cft_fasttext_get_word_id(fasttext_t* handle, const char* word);
+CFASTTEXT_API int32_t cft_fasttext_get_subword_id(fasttext_t* handle, const char* word);
+CFASTTEXT_API bool cft_fasttext_is_quant(fasttext_t* handle);
+CFASTTEXT_API void cft_fasttext_analogies(fasttext_t* handle, int32_t k);
+CFASTTEXT_API void cft_fasttext_train_thread(fasttext_t* handle, int32_t n);
+CFASTTEXT_API void cft_fasttext_load_vectors(fasttext_t* handle, const char* filename);
+CFASTTEXT_API void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args);
+CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold);
 CFASTTEXT_API void cft_fasttext_predictions_free(fasttext_predictions_t* predictions);
-CFASTTEXT_API void cft_fasttext_quantize(fasttext_t handle, fasttext_args_t args);
+CFASTTEXT_API void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args);
 
 #ifdef __cplusplus
 }

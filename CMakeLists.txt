@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8 FATAL_ERROR)
-project(cjieba)
+project(cfasttext)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -std=c99")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
@@ -28,5 +28,5 @@ add_library(cfasttext_static STATIC $<TARGET_OBJECTS:objlib>)
 set_target_properties(cfasttext PROPERTIES PUBLIC_HEADER ${PROJECT_SOURCE_DIR}/include/cfasttext.h)
 
 target_link_libraries(cfasttext fasttext-static_pic)
-target_link_libraries(cfasttext_static fasttext-static_pic)
+target_link_libraries(cfasttext_static fasttext-static)
 

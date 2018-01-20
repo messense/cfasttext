@@ -33,18 +33,16 @@ void cft_args_free(fasttext_args_t* handle) {
     delete x;
 }
 
-char* cft_args_get_input(fasttext_args_t* handle) {
-    auto input = ((Args*)handle)->input;
-    return strdup(input.c_str());
+const char* cft_args_get_input(fasttext_args_t* handle) {
+    return ((Args*)handle)->input.c_str();
 }
 
 void cft_args_set_input(fasttext_args_t* handle, const char* input) {
     ((Args*)handle)->input = input;
 }
 
-char* cft_args_get_output(fasttext_args_t* handle) {
-    auto output = ((Args*)handle)->output;
-    return strdup(output.c_str());
+const char* cft_args_get_output(fasttext_args_t* handle) {
+    return ((Args*)handle)->output.c_str();
 }
 
 void cft_args_set_output(fasttext_args_t* handle, const char* output) {

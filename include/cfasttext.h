@@ -35,9 +35,9 @@ CFASTTEXT_API void cft_str_free(char* s);
 CFASTTEXT_API fasttext_args_t* cft_args_new(void);
 CFASTTEXT_API void cft_args_parse(fasttext_args_t* handle, int argc, char** argv);
 CFASTTEXT_API void cft_args_free(fasttext_args_t* handle);
-CFASTTEXT_API char* cft_args_get_input(fasttext_args_t* handle);
+CFASTTEXT_API const char* cft_args_get_input(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_input(fasttext_args_t* handle, const char* input);
-CFASTTEXT_API char* cft_args_get_output(fasttext_args_t* handle);
+CFASTTEXT_API const char* cft_args_get_output(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_output(fasttext_args_t* handle, const char* output);
 
 CFASTTEXT_API fasttext_t* cft_fasttext_new(void);

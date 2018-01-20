@@ -117,7 +117,7 @@ fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* tex
     fasttext_prediction_t* c_preds = static_cast<fasttext_prediction_t*>(malloc(sizeof(fasttext_prediction_t) * len));
     for (size_t i = 0; i < len; i++) {
         c_preds[i].label = strdup(predictions[i].second.c_str());
-        c_preds[i].prob = std::exp(predictions[i].first);
+        c_preds[i].prob = predictions[i].first;
     }
     ret->predictions = c_preds;
     return ret;

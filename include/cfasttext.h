@@ -31,7 +31,6 @@ typedef struct {
     size_t length;
 } fasttext_predictions_t;
 
-CFASTTEXT_API void cft_str_free(char* s);
 CFASTTEXT_API fasttext_args_t* cft_args_new(void);
 CFASTTEXT_API void cft_args_parse(fasttext_args_t* handle, int argc, char** argv);
 CFASTTEXT_API void cft_args_free(fasttext_args_t* handle);

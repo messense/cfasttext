@@ -15,10 +15,6 @@ using namespace fasttext;
 extern "C" {
 #endif /* __cplusplus */
 
-void cft_str_free(char* s) {
-    free(s);
-}
-
 fasttext_args_t* cft_args_new(void) {
     return (fasttext_args_t*)(new Args());
 }

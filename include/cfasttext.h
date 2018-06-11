@@ -57,7 +57,22 @@ CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, c
 CFASTTEXT_API void cft_fasttext_predictions_free(fasttext_predictions_t* predictions);
 CFASTTEXT_API void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args);
 
-CFASTTEXT_API void cft_get_word_vector(fasttext_t* handle, const char *word, float *buf);
+/**
+ * Get word vector
+ * i.e.
+ * <pre>
+ * <code>
+ * fasttext_t* handle = cft_fasttext_new();
+ * // ...
+ * float *vector = malloc(sizeof(float) * cft_fasttext_get_dimension(handle));
+ * cft_get_word_vector(handle, "hello", buf);
+ * </code>
+ * </pre>
+ * @param handle, fasttext handle created with `cft_fasttext_new`
+ * @param word, the word to be vectorized
+ * @param buf, output buffer to receive word vector, size should not be less than `cft_fasttext_get_dimension(handle)`.
+ */
+CFASTTEXT_API void cft_get_word_vector(fasttext_t* handle, const char* word, float* buf);
 
 #ifdef __cplusplus
 }

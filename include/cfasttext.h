@@ -72,7 +72,7 @@ CFASTTEXT_API void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* ar
  * @param word, the word to be vectorized
  * @param buf, output buffer to receive word vector, size should not be less than `cft_fasttext_get_dimension(handle)`.
  */
-CFASTTEXT_API void cft_get_word_vector(fasttext_t* handle, const char* word, float* buf);
+CFASTTEXT_API void cft_fasttext_get_word_vector(fasttext_t* handle, const char* word, float* buf);
 
 #ifdef __cplusplus
 }

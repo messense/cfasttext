@@ -133,7 +133,7 @@ void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args) {
     ((FastText*)handle)->quantize(*a);
 }
 
-void cft_get_word_vector(fasttext_t* handle, const char* word, float* buf) {
+void cft_fasttext_get_word_vector(fasttext_t* handle, const char* word, float* buf) {
     Vector vec(((FastText*)handle)->getDimension());
     ((FastText*)handle)->getWordVector(vec, word);
     memcpy(buf, vec.data(), vec.size() * sizeof(real));

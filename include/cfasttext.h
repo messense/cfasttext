@@ -57,6 +57,8 @@ CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, c
 CFASTTEXT_API void cft_fasttext_predictions_free(fasttext_predictions_t* predictions);
 CFASTTEXT_API void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args);
 
+CFASTTEXT_API void cft_get_word_vector(fasttext_t* handle, const char *word, float *buf);
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

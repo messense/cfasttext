@@ -22,6 +22,12 @@ static void save_error(char** errptr, const std::exception& e) {
     *errptr = strdup(e.what());
 }
 
+void cft_str_free(char* s) {
+    if (s != nullptr) {
+        free(s);
+    }
+}
+
 fasttext_args_t* cft_args_new(void) {
     return (fasttext_args_t*)(new Args());
 }

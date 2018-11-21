@@ -16,6 +16,12 @@ using namespace fasttext;
 extern "C" {
 #endif /* __cplusplus */
 
+
+static void save_error(char** errptr, const std::exception& e) {
+    assert(errptr != nullptr);
+    *errptr = strdup(e.what());
+}
+
 fasttext_args_t* cft_args_new(void) {
     return (fasttext_args_t*)(new Args());
 }
@@ -55,20 +61,36 @@ void cft_fasttext_free(fasttext_t* handle) {
     delete x;
 }
 
-void cft_fasttext_load_model(fasttext_t* handle, const char* filename) {
-    ((FastText*)handle)->loadModel(filename);
+void cft_fasttext_load_model(fasttext_t* handle, const char* filename, char** errptr) {
+    try {
+        ((FastText*)handle)->loadModel(filename);
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
-void cft_fasttext_save_model(fasttext_t* handle) {
-    ((FastText*)handle)->saveModel();
+void cft_fasttext_save_model(fasttext_t* handle, char** errptr) {
+    try {
+        ((FastText*)handle)->saveModel();
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
-void cft_fasttext_save_output(fasttext_t* handle) {
-    ((FastText*)handle)->saveOutput();
+void cft_fasttext_save_output(fasttext_t* handle, char** errptr) {
+    try {
+        ((FastText*)handle)->saveOutput();
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
-void cft_fasttext_save_vectors(fasttext_t* handle) {
-    ((FastText*)handle)->saveVectors();
+void cft_fasttext_save_vectors(fasttext_t* handle, char** errptr) {
+    try {
+        ((FastText*)handle)->saveVectors();
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
 int cft_fasttext_get_dimension(fasttext_t* handle) {
@@ -87,8 +109,12 @@ void cft_fasttext_train_thread(fasttext_t* handle, int32_t n) {
     ((FastText*)handle)->trainThread(n);
 }
 
-void cft_fasttext_load_vectors(fasttext_t* handle, const char* filename) {
-    ((FastText*)handle)->loadVectors(filename);
+void cft_fasttext_load_vectors(fasttext_t* handle, const char* filename, char** errptr) {
+    try {
+        ((FastText*)handle)->loadVectors(filename);
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
 int32_t cft_fasttext_get_word_id(fasttext_t* handle, const char* word) {
@@ -99,9 +125,13 @@ int32_t cft_fasttext_get_subword_id(fasttext_t* handle, const char* word) {
     return ((FastText*)handle)->getSubwordId(word);
 }
 
-void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args) {
+void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args, char** errptr) {
     Args* a = (Args*)args;
-    ((FastText*)handle)->train(*a);
+    try {
+        ((FastText*)handle)->train(*a);
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
 fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold) {
@@ -142,9 +172,13 @@ void cft_fasttext_predictions_free(fasttext_predictions_t* predictions) {
     free(predictions);
 }
 
-void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args) {
+void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args, char** errptr) {
     Args* a = (Args*)args;
-    ((FastText*)handle)->quantize(*a);
+    try {
+        ((FastText*)handle)->quantize(*a);
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
 void cft_fasttext_get_word_vector(fasttext_t* handle, const char* word, float* buf) {

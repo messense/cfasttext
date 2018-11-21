@@ -104,16 +104,29 @@ void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args) {
 }
 
 fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold) {
-    std::vector<std::pair<fasttext::real, std::string>> predictions;
+    std::vector<std::pair<fasttext::real, int32_t>> predictions;
+    std::vector<std::pair<fasttext::real, std::string>> all_predictions;
     std::stringstream ioss(text);
-    ((FastText*)handle)->predict(ioss, k, predictions, threshold);
-    size_t len = predictions.size();
+    std::shared_ptr<const fasttext::Dictionary> d = ((FastText*)handle)->getDictionary();
+    std::vector<int32_t> words, labels;
+    d->getLine(ioss, words, labels);
+    ((FastText*)handle)->predict(k, words, predictions, threshold);
+    std::transform(
+        predictions.begin(),
+        predictions.end(),
+        std::back_inserter(all_predictions),
+        [&d](const std::pair<fasttext::real, int32_t>& prediction) {
+            return std::pair<fasttext::real, std::string>(
+                std::exp(prediction.first),
+                d->getLabel(prediction.second));
+        });
+    size_t len = all_predictions.size();
     fasttext_predictions_t* ret = static_cast<fasttext_predictions_t*>(malloc(sizeof(fasttext_predictions_t)));
     ret->length = len;
     fasttext_prediction_t* c_preds = static_cast<fasttext_prediction_t*>(malloc(sizeof(fasttext_prediction_t) * len));
     for (size_t i = 0; i < len; i++) {
-        c_preds[i].label = strdup(predictions[i].second.c_str());
-        c_preds[i].prob = predictions[i].first;
+        c_preds[i].label = strdup(all_predictions[i].second.c_str());
+        c_preds[i].prob = all_predictions[i].first;
     }
     ret->predictions = c_preds;
     return ret;

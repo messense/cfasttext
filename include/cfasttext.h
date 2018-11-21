@@ -17,9 +17,6 @@ extern "C" {
 #   endif /* defined(_WIN32) || defined(_WIN64) */
 #endif /* CFASTTEXT_API */
 
-#define FASTTEXT_TRUE           (1)
-#define CFASTTEXT_FALSE          (0)
-
 typedef struct fasttext_t fasttext_t;
 typedef struct fasttext_args_t fasttext_args_t;
 typedef struct {

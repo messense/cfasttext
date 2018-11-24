@@ -33,15 +33,15 @@ typedef struct {
 } fasttext_tokens_t;
 
 typedef enum {
-    CBOW = 1,
-    SG,
-    SUP,
+    MODEL_CBOW = 1,
+    MODEL_SG,
+    MODEL_SUP,
 } model_name_t;
 
 typedef enum {
-    HS = 1,
-    NS,
-    SOFTMAX,
+    LOSS_HS = 1,
+    LOSS_NS,
+    LOSS_SOFTMAX,
 } loss_name_t;
 
 CFASTTEXT_API void cft_str_free(char* s);

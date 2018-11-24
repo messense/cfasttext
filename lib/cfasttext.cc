@@ -170,6 +170,13 @@ void cft_fasttext_get_word_vector(fasttext_t* handle, const char* word, float* b
     memcpy(buf, vec.data(), vec.size() * sizeof(real));
 }
 
+void cft_fasttext_get_sentence_vector(fasttext_t* handle, const char* sentence, float* buf) {
+    Vector vec(((FastText*)handle)->getDimension());
+    std::stringstream ioss(sentence);
+    ((FastText*)handle)->getSentenceVector(ioss, vec);
+    memcpy(buf, vec.data(), vec.size() * sizeof(real));
+}
+
 fasttext_tokens_t* cft_fasttext_tokenize(fasttext_t* handle, const char* text) {
     std::vector<std::string> text_split;
     std::shared_ptr<const fasttext::Dictionary> d = ((FastText*)handle)->getDictionary();

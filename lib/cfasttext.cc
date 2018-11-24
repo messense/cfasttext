@@ -104,6 +104,22 @@ void cft_args_set_thread(fasttext_args_t* handle, int thread) {
     ((Args*)handle)->thread = thread;
 }
 
+model_name_t cft_args_get_model(fasttext_args_t* handle) {
+    return static_cast<model_name_t>(static_cast<int>(((Args*)handle)->model));
+}
+
+void cft_args_set_model(fasttext_args_t* handle, model_name_t model) {
+    ((Args*)handle)->model = static_cast<model_name>(model);
+}
+
+loss_name_t cft_args_get_loss(fasttext_args_t* handle) {
+    return static_cast<loss_name_t>(static_cast<int>(((Args*)handle)->model));
+}
+
+void cft_args_set_loss(fasttext_args_t* handle, loss_name_t loss) {
+    ((Args*)handle)->loss = static_cast<loss_name>(loss);
+}
+
 fasttext_t* cft_fasttext_new(void) {
     return (fasttext_t*)(new FastText());
 }

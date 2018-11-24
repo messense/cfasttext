@@ -32,6 +32,18 @@ typedef struct {
     size_t length;
 } fasttext_tokens_t;
 
+typedef enum {
+    CBOW = 1,
+    SG,
+    SUP,
+} model_name_t;
+
+typedef enum {
+    HS = 1,
+    NS,
+    SOFTMAX,
+} loss_name_t;
+
 CFASTTEXT_API void cft_str_free(char* s);
 CFASTTEXT_API fasttext_args_t* cft_args_new(void);
 CFASTTEXT_API void cft_args_parse(fasttext_args_t* handle, int argc, char** argv);
@@ -52,6 +64,10 @@ CFASTTEXT_API int cft_args_get_epoch(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_epoch(fasttext_args_t* handle, int epoch);
 CFASTTEXT_API int cft_args_get_thread(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_thread(fasttext_args_t* handle, int thread);
+CFASTTEXT_API model_name_t cft_args_get_model(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_model(fasttext_args_t* handle, model_name_t model);
+CFASTTEXT_API loss_name_t cft_args_get_loss(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_loss(fasttext_args_t* handle, loss_name_t loss);
 
 CFASTTEXT_API fasttext_t* cft_fasttext_new(void);
 CFASTTEXT_API void cft_fasttext_free(fasttext_t* handle);

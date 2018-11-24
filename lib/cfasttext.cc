@@ -1,7 +1,5 @@
 #include <iostream>
 #include <sstream>
-#include <algorithm>
-
 #include <string.h>
 
 #include "args.h"
@@ -75,25 +73,25 @@ void cft_fasttext_load_model(fasttext_t* handle, const char* filename, char** er
     }
 }
 
-void cft_fasttext_save_model(fasttext_t* handle, char** errptr) {
+void cft_fasttext_save_model(fasttext_t* handle, const char* filename, char** errptr) {
     try {
-        ((FastText*)handle)->saveModel();
+        ((FastText*)handle)->saveModel(filename);
     } catch (const std::invalid_argument& e) {
         save_error(errptr, e);
     }
 }
 
-void cft_fasttext_save_output(fasttext_t* handle, char** errptr) {
+void cft_fasttext_save_output(fasttext_t* handle, const char* filename, char** errptr) {
     try {
-        ((FastText*)handle)->saveOutput();
+        ((FastText*)handle)->saveOutput(filename);
     } catch (const std::invalid_argument& e) {
         save_error(errptr, e);
     }
 }
 
-void cft_fasttext_save_vectors(fasttext_t* handle, char** errptr) {
+void cft_fasttext_save_vectors(fasttext_t* handle, const char* filename, char** errptr) {
     try {
-        ((FastText*)handle)->saveVectors();
+        ((FastText*)handle)->saveVectors(filename);
     } catch (const std::invalid_argument& e) {
         save_error(errptr, e);
     }
@@ -105,14 +103,6 @@ int cft_fasttext_get_dimension(fasttext_t* handle) {
 
 bool cft_fasttext_is_quant(fasttext_t* handle) {
     return ((FastText*)handle)->isQuant();
-}
-
-void cft_fasttext_analogies(fasttext_t* handle, int32_t k) {
-    ((FastText*)handle)->analogies(k);
-}
-
-void cft_fasttext_train_thread(fasttext_t* handle, int32_t n) {
-    ((FastText*)handle)->trainThread(n);
 }
 
 void cft_fasttext_load_vectors(fasttext_t* handle, const char* filename, char** errptr) {
@@ -141,29 +131,16 @@ void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args, char** errptr
 }
 
 fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold) {
-    std::vector<std::pair<fasttext::real, int32_t>> predictions;
-    std::vector<std::pair<fasttext::real, std::string>> all_predictions;
+    std::vector<std::pair<fasttext::real, std::string>> predictions;
     std::stringstream ioss(text);
-    std::shared_ptr<const fasttext::Dictionary> d = ((FastText*)handle)->getDictionary();
-    std::vector<int32_t> words, labels;
-    d->getLine(ioss, words, labels);
-    ((FastText*)handle)->predict(k, words, predictions, threshold);
-    std::transform(
-        predictions.begin(),
-        predictions.end(),
-        std::back_inserter(all_predictions),
-        [&d](const std::pair<fasttext::real, int32_t>& prediction) {
-            return std::pair<fasttext::real, std::string>(
-                std::exp(prediction.first),
-                d->getLabel(prediction.second));
-        });
-    size_t len = all_predictions.size();
+    ((FastText*)handle)->predictLine(ioss, predictions, k, threshold);
+    size_t len = predictions.size();
     fasttext_predictions_t* ret = static_cast<fasttext_predictions_t*>(malloc(sizeof(fasttext_predictions_t)));
     ret->length = len;
     fasttext_prediction_t* c_preds = static_cast<fasttext_prediction_t*>(malloc(sizeof(fasttext_prediction_t) * len));
     for (size_t i = 0; i < len; i++) {
-        c_preds[i].label = strdup(all_predictions[i].second.c_str());
-        c_preds[i].prob = all_predictions[i].first;
+        c_preds[i].label = strdup(predictions[i].second.c_str());
+        c_preds[i].prob = predictions[i].first;
     }
     ret->predictions = c_preds;
     return ret;
@@ -193,6 +170,34 @@ void cft_fasttext_get_word_vector(fasttext_t* handle, const char* word, float* b
     memcpy(buf, vec.data(), vec.size() * sizeof(real));
 }
 
+fasttext_tokens_t* cft_fasttext_tokenize(fasttext_t* handle, const char* text) {
+    std::vector<std::string> text_split;
+    std::shared_ptr<const fasttext::Dictionary> d = ((FastText*)handle)->getDictionary();
+    std::stringstream ioss(text);
+    std::string token;
+    while (!ioss.eof()) {
+        while (d->readWord(ioss, token)) {
+        text_split.push_back(token);
+        }
+    }
+    size_t len = text_split.size();
+    fasttext_tokens_t* ret = static_cast<fasttext_tokens_t*>(malloc(sizeof(fasttext_tokens_t)));
+    ret->length = len;
+    char** tokens = static_cast<char**>(malloc(sizeof(char*) * len));
+    for (size_t i = 0; i < len; i++) {
+        tokens[i] = strdup(text_split[i].c_str());
+    }
+    ret->tokens = tokens;
+    return ret;
+}
+
+void cft_fasttext_tokens_free(fasttext_tokens_t* tokens) {
+    for (size_t i = 0; i < tokens->length; i++) {
+        free(tokens->tokens[i]);
+    }
+    free(tokens->tokens);
+    free(tokens);
+}
 
 #ifdef __cplusplus
 }

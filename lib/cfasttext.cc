@@ -113,7 +113,7 @@ void cft_args_set_model(fasttext_args_t* handle, model_name_t model) {
 }
 
 loss_name_t cft_args_get_loss(fasttext_args_t* handle) {
-    return static_cast<loss_name_t>(static_cast<int>(((Args*)handle)->model));
+    return static_cast<loss_name_t>(static_cast<int>(((Args*)handle)->loss));
 }
 
 void cft_args_set_loss(fasttext_args_t* handle, loss_name_t loss) {

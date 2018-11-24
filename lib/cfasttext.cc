@@ -56,6 +56,54 @@ void cft_args_set_output(fasttext_args_t* handle, const char* output) {
     ((Args*)handle)->output = output;
 }
 
+double cft_args_get_lr(fasttext_args_t* handle) {
+    return ((Args*)handle)->lr;
+}
+
+void cft_args_set_lr(fasttext_args_t* handle, double lr) {
+    ((Args*)handle)->lr = lr;
+}
+
+int cft_args_get_lr_update_rate(fasttext_args_t* handle) {
+    return ((Args*)handle)->lrUpdateRate;
+}
+
+void cft_args_set_lr_update_rate(fasttext_args_t* handle, int rate) {
+    ((Args*)handle)->lrUpdateRate = rate;
+}
+
+int cft_args_get_dim(fasttext_args_t* handle) {
+    return ((Args*)handle)->dim;
+}
+
+void cft_args_set_dim(fasttext_args_t* handle, int dim) {
+    ((Args*)handle)->dim = dim;
+}
+
+int cft_args_get_ws(fasttext_args_t* handle) {
+    return ((Args*)handle)->ws;
+}
+
+void cft_args_set_ws(fasttext_args_t* handle, int ws) {
+    ((Args*)handle)->ws = ws;
+}
+
+int cft_args_get_epoch(fasttext_args_t* handle) {
+    return ((Args*)handle)->epoch;
+}
+
+void cft_args_set_epoch(fasttext_args_t* handle, int epoch) {
+    ((Args*)handle)->epoch = epoch;
+}
+
+int cft_args_get_thread(fasttext_args_t* handle) {
+    return ((Args*)handle)->thread;
+}
+
+void cft_args_set_thread(fasttext_args_t* handle, int thread) {
+    ((Args*)handle)->thread = thread;
+}
+
 fasttext_t* cft_fasttext_new(void) {
     return (fasttext_t*)(new FastText());
 }

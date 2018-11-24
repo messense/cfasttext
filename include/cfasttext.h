@@ -40,6 +40,18 @@ CFASTTEXT_API const char* cft_args_get_input(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_input(fasttext_args_t* handle, const char* input);
 CFASTTEXT_API const char* cft_args_get_output(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_output(fasttext_args_t* handle, const char* output);
+CFASTTEXT_API double cft_args_get_lr(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_lr(fasttext_args_t* handle, double lr);
+CFASTTEXT_API int cft_args_get_lr_update_rate(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_lr_update_rate(fasttext_args_t* handle, int rate);
+CFASTTEXT_API int cft_args_get_dim(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_dim(fasttext_args_t* handle, int dim);
+CFASTTEXT_API int cft_args_get_ws(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_ws(fasttext_args_t* handle, int ws);
+CFASTTEXT_API int cft_args_get_epoch(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_epoch(fasttext_args_t* handle, int epoch);
+CFASTTEXT_API int cft_args_get_thread(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_thread(fasttext_args_t* handle, int thread);
 
 CFASTTEXT_API fasttext_t* cft_fasttext_new(void);
 CFASTTEXT_API void cft_fasttext_free(fasttext_t* handle);

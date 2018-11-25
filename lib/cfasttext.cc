@@ -120,6 +120,86 @@ void cft_args_set_loss(fasttext_args_t* handle, loss_name_t loss) {
     ((Args*)handle)->loss = static_cast<loss_name>(loss);
 }
 
+int cft_args_get_min_count(fasttext_args_t* handle) {
+    return ((Args*)handle)->minCount;
+}
+
+void cft_args_set_min_count(fasttext_args_t* handle, int min_count) {
+    ((Args*)handle)->minCount = min_count;
+}
+
+int cft_args_get_min_count_label(fasttext_args_t* handle) {
+    return ((Args*)handle)->minCountLabel;
+}
+
+void cft_args_set_min_count_label(fasttext_args_t* handle, int min_count) {
+    ((Args*)handle)->minCountLabel = min_count;
+}
+
+int cft_args_get_neg(fasttext_args_t* handle) {
+    return ((Args*)handle)->neg;
+}
+
+void cft_args_set_neg(fasttext_args_t* handle, int neg) {
+    ((Args*)handle)->neg = neg;
+}
+
+int cft_args_get_word_ngrams(fasttext_args_t* handle) {
+    return ((Args*)handle)->wordNgrams;
+}
+
+void cft_args_set_word_ngrams(fasttext_args_t* handle, int ngrams) {
+    ((Args*)handle)->wordNgrams = ngrams;
+}
+
+int cft_args_get_bucket(fasttext_args_t* handle) {
+    return ((Args*)handle)->bucket;
+}
+
+void cft_args_set_bucket(fasttext_args_t* handle, int bucket) {
+    ((Args*)handle)->bucket = bucket;
+}
+
+int cft_args_get_minn(fasttext_args_t* handle) {
+    return ((Args*)handle)->minn;
+}
+
+void cft_args_set_minn(fasttext_args_t* handle, int minn) {
+    ((Args*)handle)->minn = minn;
+}
+
+int cft_args_get_maxn(fasttext_args_t* handle) {
+    return ((Args*)handle)->maxn;
+}
+
+void cft_args_set_maxn(fasttext_args_t* handle, int maxn) {
+    ((Args*)handle)->maxn = maxn;
+}
+
+int cft_args_get_t(fasttext_args_t* handle) {
+    return ((Args*)handle)->t;
+}
+
+void cft_args_set_t(fasttext_args_t* handle, int t) {
+    ((Args*)handle)->t = t;
+}
+
+int cft_args_get_verbose(fasttext_args_t* handle) {
+    return ((Args*)handle)->verbose;
+}
+
+void cft_args_set_verbose(fasttext_args_t* handle, int verbose) {
+    ((Args*)handle)->verbose = verbose;
+}
+
+const char* cft_args_get_label(fasttext_args_t* handle) {
+    return ((Args*)handle)->label.c_str();
+}
+
+void cft_args_set_label(fasttext_args_t* handle, const char* label) {
+    ((Args*)handle)->label = label;
+}
+
 fasttext_t* cft_fasttext_new(void) {
     return (fasttext_t*)(new FastText());
 }

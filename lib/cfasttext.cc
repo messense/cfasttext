@@ -200,6 +200,74 @@ void cft_args_set_label(fasttext_args_t* handle, const char* label) {
     ((Args*)handle)->label = label;
 }
 
+bool cft_args_get_save_output(fasttext_args_t* handle) {
+    return ((Args*)handle)->saveOutput;
+}
+
+void cft_args_set_save_output(fasttext_args_t* handle, bool save_output) {
+    ((Args*)handle)->saveOutput = save_output;
+}
+
+bool cft_args_get_qout(fasttext_args_t* handle) {
+    return ((Args*)handle)->qout;
+}
+
+void cft_args_set_qout(fasttext_args_t* handle, bool qout) {
+    ((Args*)handle)->qout = qout;
+}
+
+bool cft_args_get_retrain(fasttext_args_t* handle) {
+    return ((Args*)handle)->retrain;
+}
+
+void cft_args_set_retrain(fasttext_args_t* handle, bool retrain) {
+    ((Args*)handle)->retrain = retrain;
+}
+
+bool cft_args_get_qnorm(fasttext_args_t* handle) {
+    return ((Args*)handle)->qnorm;
+}
+
+void cft_args_set_qnorm(fasttext_args_t* handle, bool qnorm) {
+    ((Args*)handle)->qnorm = qnorm;
+}
+
+size_t cft_args_get_cutoff(fasttext_args_t* handle) {
+    return ((Args*)handle)->cutoff;
+}
+
+void cft_args_set_cutoff(fasttext_args_t* handle, size_t cutoff) {
+    ((Args*)handle)->cutoff = cutoff;
+}
+
+size_t cft_args_get_dsub(fasttext_args_t* handle) {
+    return ((Args*)handle)->dsub;
+}
+
+void cft_args_set_dsub(fasttext_args_t* handle, size_t dsub) {
+    ((Args*)handle)->dsub = dsub;
+}
+
+void cft_args_print_help(fasttext_args_t* handle) {
+    ((Args*)handle)->printHelp();
+}
+
+void cft_args_print_basic_help(fasttext_args_t* handle) {
+    ((Args*)handle)->printBasicHelp();
+}
+
+void cft_args_print_dictionary_help(fasttext_args_t* handle) {
+    ((Args*)handle)->printDictionaryHelp();
+}
+
+void cft_args_print_training_help(fasttext_args_t* handle) {
+    ((Args*)handle)->printTrainingHelp();
+}
+
+void cft_args_print_quantization_help(fasttext_args_t* handle) {
+    ((Args*)handle)->printQuantizationHelp();
+}
+
 fasttext_t* cft_fasttext_new(void) {
     return (fasttext_t*)(new FastText());
 }

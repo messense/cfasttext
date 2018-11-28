@@ -42,6 +42,7 @@ typedef enum {
     LOSS_HS = 1,
     LOSS_NS,
     LOSS_SOFTMAX,
+    LOSS_OVA,
 } loss_name_t;
 
 CFASTTEXT_API void cft_str_free(char* s);

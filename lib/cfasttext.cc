@@ -358,6 +358,26 @@ fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* tex
     return ret;
 }
 
+fasttext_predictions_t* cft_fasttext_predict_on_words(fasttext_t* handle, fasttext_words_t* words_t, int32_t k, float threshold) {
+    std::vector<std::pair<fasttext::real, int32_t >> predictions;
+    int32_t* words = words_t->words;
+    std::vector<int32_t > word_ids(words, words + words_t->length);
+
+    ((FastText*)handle)->predict(k, word_ids, predictions, threshold);
+    size_t len = predictions.size();
+    fasttext_predictions_t* ret = static_cast<fasttext_predictions_t*>(malloc(sizeof(fasttext_predictions_t)));
+    ret->length = len;
+    fasttext_prediction_t* c_preds = static_cast<fasttext_prediction_t*>(malloc(sizeof(fasttext_prediction_t) * len));
+    for (size_t i = 0; i < len; i++) {
+        int32_t label_id = predictions[i].second;
+        std::string label = ((FastText*)handle)->getDictionary()->getLabel(label_id);
+        c_preds[i].label = strdup(label.c_str());
+        c_preds[i].prob = exp(predictions[i].first);
+    }
+    ret->predictions = c_preds;
+    return ret;
+}
+
 void cft_fasttext_predictions_free(fasttext_predictions_t* predictions) {
     for (size_t i = 0; i < predictions->length; i++) {
         fasttext_prediction_t pred = predictions->predictions[i];

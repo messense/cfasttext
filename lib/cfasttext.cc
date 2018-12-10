@@ -342,10 +342,15 @@ void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args, char** errptr
     }
 }
 
-fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold) {
+fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold, char** errptr) {
     std::vector<std::pair<fasttext::real, std::string>> predictions;
     std::stringstream ioss(text);
-    ((FastText*)handle)->predictLine(ioss, predictions, k, threshold);
+    try {
+        ((FastText*)handle)->predictLine(ioss, predictions, k, threshold);
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+        return nullptr;
+    }
     size_t len = predictions.size();
     fasttext_predictions_t* ret = static_cast<fasttext_predictions_t*>(malloc(sizeof(fasttext_predictions_t)));
     ret->length = len;
@@ -358,12 +363,17 @@ fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* tex
     return ret;
 }
 
-fasttext_predictions_t* cft_fasttext_predict_on_words(fasttext_t* handle, fasttext_words_t* words_t, int32_t k, float threshold) {
+fasttext_predictions_t* cft_fasttext_predict_on_words(fasttext_t* handle, fasttext_words_t* words_t, int32_t k, float threshold, char** errptr) {
     std::vector<std::pair<fasttext::real, int32_t >> predictions;
     int32_t* words = words_t->words;
     std::vector<int32_t > word_ids(words, words + words_t->length);
 
-    ((FastText*)handle)->predict(k, word_ids, predictions, threshold);
+    try {
+        ((FastText*)handle)->predict(k, word_ids, predictions, threshold);
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+        return nullptr;
+    }
     size_t len = predictions.size();
     fasttext_predictions_t* ret = static_cast<fasttext_predictions_t*>(malloc(sizeof(fasttext_predictions_t)));
     ret->length = len;
@@ -379,6 +389,9 @@ fasttext_predictions_t* cft_fasttext_predict_on_words(fasttext_t* handle, fastte
 }
 
 void cft_fasttext_predictions_free(fasttext_predictions_t* predictions) {
+    if (predictions == nullptr) {
+        return;
+    }
     for (size_t i = 0; i < predictions->length; i++) {
         fasttext_prediction_t pred = predictions->predictions[i];
         free(pred.label);

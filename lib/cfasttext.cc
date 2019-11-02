@@ -317,14 +317,6 @@ bool cft_fasttext_is_quant(fasttext_t* handle) {
     return ((FastText*)handle)->isQuant();
 }
 
-void cft_fasttext_load_vectors(fasttext_t* handle, const char* filename, char** errptr) {
-    try {
-        ((FastText*)handle)->loadVectors(filename);
-    } catch (const std::invalid_argument& e) {
-        save_error(errptr, e);
-    }
-}
-
 int32_t cft_fasttext_get_word_id(fasttext_t* handle, const char* word) {
     return ((FastText*)handle)->getWordId(word);
 }
@@ -420,6 +412,10 @@ void cft_fasttext_get_sentence_vector(fasttext_t* handle, const char* sentence, 
     std::stringstream ioss(sentence);
     ((FastText*)handle)->getSentenceVector(ioss, vec);
     memcpy(buf, vec.data(), vec.size() * sizeof(real));
+}
+
+void cft_fasttext_abort(fasttext_t* handle) {
+    ((FastText*)handle)->abort();
 }
 
 fasttext_tokens_t* cft_fasttext_tokenize(fasttext_t* handle, const char* text) {

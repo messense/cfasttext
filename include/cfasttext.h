@@ -121,13 +121,13 @@ CFASTTEXT_API int cft_fasttext_get_dimension(fasttext_t* handle);
 CFASTTEXT_API int32_t cft_fasttext_get_word_id(fasttext_t* handle, const char* word);
 CFASTTEXT_API int32_t cft_fasttext_get_subword_id(fasttext_t* handle, const char* word);
 CFASTTEXT_API bool cft_fasttext_is_quant(fasttext_t* handle);
-CFASTTEXT_API void cft_fasttext_load_vectors(fasttext_t* handle, const char* filename, char** errptr);
 CFASTTEXT_API void cft_fasttext_train(fasttext_t* handle, fasttext_args_t* args, char** errptr);
 CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict(fasttext_t* handle, const char* text, int32_t k, float threshold, char** errptr);
 CFASTTEXT_API fasttext_predictions_t* cft_fasttext_predict_on_words(fasttext_t* handle, fasttext_words_t* words, int32_t k, float threshold, char** errptr);
 CFASTTEXT_API void cft_fasttext_predictions_free(fasttext_predictions_t* predictions);
 CFASTTEXT_API void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args, char** errptr);
 CFASTTEXT_API fasttext_tokens_t* cft_fasttext_tokenize(fasttext_t* handle, const char* text);
+CFASTTEXT_API void cft_fasttext_abort(fasttext_t* handle);
 CFASTTEXT_API void cft_fasttext_tokens_free(fasttext_tokens_t* tokens);
 
 /**

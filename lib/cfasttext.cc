@@ -248,6 +248,62 @@ void cft_args_set_dsub(fasttext_args_t* handle, size_t dsub) {
     ((Args*)handle)->dsub = dsub;
 }
 
+const char* cft_args_get_pretrained_vectors(fasttext_args_t* handle) {
+    return ((Args*)handle)->pretrainedVectors.c_str();
+}
+
+void cft_args_set_pretrained_vectors(fasttext_args_t* handle, const char* pretrained_vectors) {
+    ((Args*)handle)->pretrainedVectors = pretrained_vectors;
+}
+
+int cft_args_get_seed(fasttext_args_t* handle) {
+    return ((Args*)handle)->seed;
+}
+
+void cft_args_set_seed(fasttext_args_t* handle, int seed) {
+    ((Args*)handle)->seed = seed;
+}
+
+const char* cft_args_get_autotune_validation_file(fasttext_args_t* handle) {
+    return ((Args*)handle)->autotuneValidationFile.c_str();
+}
+
+void cft_args_set_autotune_validation_file(fasttext_args_t* handle, const char* autotune_validation_file) {
+    ((Args*)handle)->autotuneValidationFile = autotune_validation_file;
+}
+
+metric_name_t cft_args_get_autotune_metric(fasttext_args_t* handle) {
+    return static_cast<metric_name_t>(static_cast<int>(((Args*)handle)->getAutotuneMetric()));
+}
+
+const char* cft_args_get_autotune_metric_label(fasttext_args_t *handle) {
+    return ((Args*)handle)->getAutotuneMetricLabel().c_str();
+}
+
+bool cft_args_has_autotune(fasttext_args_t* handle) {
+    return ((Args*)handle)->hasAutotune();
+}
+
+int cft_args_get_autotune_predictions(fasttext_args_t* handle) {
+    return ((Args*)handle)->autotunePredictions;
+}
+
+void cft_args_set_autotune_predictions(fasttext_args_t* handle, int autotune_predictions) {
+    ((Args*)handle)->autotunePredictions = autotune_predictions;
+}
+
+int cft_args_get_autotune_duration(fasttext_args_t* handle) {
+    return ((Args*)handle)->autotuneDuration;
+}
+
+void cft_args_set_autotune_duration(fasttext_args_t* handle, int autotune_duration) {
+    ((Args*)handle)->autotuneDuration = autotune_duration;
+}
+
+int64_t cft_args_get_autotune_model_size(fasttext_args_t* handle) {
+    return ((Args*)handle)->getAutotuneModelSize();
+}
+
 void cft_args_print_help(fasttext_args_t* handle) {
     ((Args*)handle)->printHelp();
 }
@@ -266,6 +322,10 @@ void cft_args_print_training_help(fasttext_args_t* handle) {
 
 void cft_args_print_quantization_help(fasttext_args_t* handle) {
     ((Args*)handle)->printQuantizationHelp();
+}
+
+void cft_args_print_autotune_help(fasttext_args_t* handle) {
+    ((Args*)handle)->printAutotuneHelp();
 }
 
 fasttext_t* cft_fasttext_new(void) {

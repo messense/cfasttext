@@ -49,7 +49,13 @@ typedef enum {
     LOSS_OVA,
 } loss_name_t;
 
+typedef enum {
+    F1_SCORE = 1,
+    LABEL_F1_SCORE,
+} metric_name_t;
+
 CFASTTEXT_API void cft_str_free(char* s);
+/* args APIs */
 CFASTTEXT_API fasttext_args_t* cft_args_new(void);
 CFASTTEXT_API void cft_args_parse(fasttext_args_t* handle, int argc, char** argv);
 CFASTTEXT_API void cft_args_free(fasttext_args_t* handle);
@@ -105,12 +111,28 @@ CFASTTEXT_API size_t cft_args_get_cutoff(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_cutoff(fasttext_args_t* handle, size_t cutoff);
 CFASTTEXT_API size_t cft_args_get_dsub(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_set_dsub(fasttext_args_t* handle, size_t dsub);
+CFASTTEXT_API const char* cft_args_get_pretrained_vectors(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_pretrained_vectors(fasttext_args_t* handle, const char* pretrained_vectors);
+CFASTTEXT_API int cft_args_get_seed(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_seed(fasttext_args_t* handle, int seed);
+CFASTTEXT_API const char* cft_args_get_autotune_validation_file(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_autotune_validation_file(fasttext_args_t* handle, const char* autotune_validation_file);
+CFASTTEXT_API metric_name_t cft_args_get_autotune_metric(fasttext_args_t* handle);
+CFASTTEXT_API const char* cft_args_get_autotune_metric_label(fasttext_args_t *handle);
+CFASTTEXT_API int cft_args_get_autotune_predictions(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_autotune_predictions(fasttext_args_t* handle, int autotune_predictions);
+CFASTTEXT_API int cft_args_get_autotune_duration(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_set_autotune_duration(fasttext_args_t* handle, int autotune_duration);
+CFASTTEXT_API int64_t cft_args_get_autotune_model_size(fasttext_args_t* handle);
+CFASTTEXT_API bool cft_args_has_autotune(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_print_help(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_print_basic_help(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_print_dictionary_help(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_print_training_help(fasttext_args_t* handle);
 CFASTTEXT_API void cft_args_print_quantization_help(fasttext_args_t* handle);
+CFASTTEXT_API void cft_args_print_autotune_help(fasttext_args_t* handle);
 
+/* fasttext APIs */
 CFASTTEXT_API fasttext_t* cft_fasttext_new(void);
 CFASTTEXT_API void cft_fasttext_free(fasttext_t* handle);
 CFASTTEXT_API void cft_fasttext_load_model(fasttext_t* handle, const char* filename, char** errptr);

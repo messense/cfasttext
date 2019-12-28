@@ -4,6 +4,7 @@
 
 #include "args.h"
 #include "fasttext.h"
+#include "autotune.h"
 
 #include "cfasttext.h"
 
@@ -505,6 +506,22 @@ void cft_fasttext_tokens_free(fasttext_tokens_t* tokens) {
     }
     free(tokens->tokens);
     free(tokens);
+}
+
+fasttext_autotune_t* cft_autotune_new(fasttext_t *handle) {
+    FastText* ft = (FastText*)handle;
+    std::shared_ptr<FastText> ft_ptr(ft);
+    return (fasttext_autotune_t*)(new Autotune(ft_ptr));
+}
+
+void cft_autotune_free(fasttext_autotune_t* handle) {
+    Autotune* x = (Autotune*)handle;
+    delete x;
+}
+
+void cft_autotune_train(fasttext_autotune_t* handle, fasttext_args_t* args) {
+    Args* a = (Args*)args;
+    ((Autotune*)handle)->train(*a);
 }
 
 #ifdef __cplusplus

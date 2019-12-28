@@ -19,6 +19,7 @@ extern "C" {
 
 typedef struct fasttext_t fasttext_t;
 typedef struct fasttext_args_t fasttext_args_t;
+typedef struct fasttext_autotune_t fasttext_autotune_t;
 typedef struct {
     float prob;
     char* label;
@@ -169,6 +170,11 @@ CFASTTEXT_API void cft_fasttext_tokens_free(fasttext_tokens_t* tokens);
  */
 CFASTTEXT_API void cft_fasttext_get_word_vector(fasttext_t* handle, const char* word, float* buf);
 CFASTTEXT_API void cft_fasttext_get_sentence_vector(fasttext_t* handle, const char* sentence, float* buf);
+
+/* autotune APIs */
+CFASTTEXT_API fasttext_autotune_t* cft_autotune_new(fasttext_t *handle);
+CFASTTEXT_API void cft_autotune_free(fasttext_autotune_t* handle);
+CFASTTEXT_API void cft_autotune_train(fasttext_autotune_t* handle, fasttext_args_t* args);
 
 #ifdef __cplusplus
 }

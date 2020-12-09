@@ -278,7 +278,7 @@ metric_name_t cft_args_get_autotune_metric(fasttext_args_t* handle) {
 }
 
 const char* cft_args_get_autotune_metric_label(fasttext_args_t *handle) {
-    return ((Args*)handle)->getAutotuneMetricLabel().c_str();
+    return strdup(((Args*)handle)->getAutotuneMetricLabel().c_str());
 }
 
 bool cft_args_has_autotune(fasttext_args_t* handle) {

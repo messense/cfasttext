@@ -338,6 +338,16 @@ void cft_fasttext_free(fasttext_t* handle) {
     delete x;
 }
 
+fasttext_args_t* cft_fasttext_get_args(fasttext_t* handle) {
+    FastText* x = (FastText*)handle;
+    std::stringstream ss;
+    Args args = x->getArgs();
+    args.save(ss);
+    Args* new_args = new Args();
+    new_args->load(ss);
+    return (fasttext_args_t*)new_args;
+}
+
 void cft_fasttext_load_model(fasttext_t* handle, const char* filename, char** errptr) {
     try {
         ((FastText*)handle)->loadModel(filename);
@@ -451,6 +461,68 @@ void cft_fasttext_predictions_free(fasttext_predictions_t* predictions) {
     }
     free(predictions->predictions);
     free(predictions);
+}
+
+fasttext_vocab_t* cft_fasttext_get_vocab(fasttext_t* handle) {
+    std::shared_ptr<const fasttext::Dictionary> d = ((FastText*)handle)->getDictionary();
+    std::vector<int64_t> vocab_freq = d->getCounts(fasttext::entry_type::word);
+    size_t len = vocab_freq.size();
+
+    fasttext_vocab_t* ret = static_cast<fasttext_vocab_t*>(malloc(sizeof(fasttext_vocab_t)));
+    ret->length = len;
+    char** words = static_cast<char**>(malloc(sizeof(char*) * len));
+    int64_t* freqs = static_cast<int64_t*>(malloc(sizeof(int64_t) * len));
+    for (int32_t i = 0; i < vocab_freq.size(); i++) {
+        std::string word = d->getWord(i);
+        words[i] = strdup(word.c_str());
+        freqs[i] = vocab_freq[i];
+    }
+    ret->words = words;
+    ret->freqs = freqs;
+    return ret;
+}
+
+void cft_fasttext_vocab_free(fasttext_vocab_t* vocab) {
+    if (vocab == nullptr) {
+        return;
+    }
+    for (size_t i = 0; i < vocab->length; i++) {
+        free(vocab->words[i]);
+    }
+    free(vocab->words);
+    free(vocab->freqs);
+    free(vocab);
+}
+
+fasttext_labels_t* cft_fasttext_get_labels(fasttext_t* handle) {
+    std::shared_ptr<const fasttext::Dictionary> d = ((FastText*)handle)->getDictionary();
+    std::vector<int64_t> labels_freq = d->getCounts(fasttext::entry_type::label);
+    size_t len = labels_freq.size();
+
+    fasttext_labels_t* ret = static_cast<fasttext_labels_t*>(malloc(sizeof(fasttext_labels_t)));
+    ret->length = len;
+    char** labels = static_cast<char**>(malloc(sizeof(char*) * len));
+    int64_t* freqs = static_cast<int64_t*>(malloc(sizeof(int64_t) * len));
+    for (int32_t i = 0; i < labels_freq.size(); i++) {
+        std::string label = d->getLabel(i);
+        labels[i] = strdup(label.c_str());
+        freqs[i] = labels_freq[i];
+    }
+    ret->labels = labels;
+    ret->freqs = freqs;
+    return ret;
+}
+
+void cft_fasttext_labels_free(fasttext_labels_t* labels) {
+    if (labels == nullptr) {
+        return;
+    }
+    for (size_t i = 0; i < labels->length; i++) {
+        free(labels->labels[i]);
+    }
+    free(labels->labels);
+    free(labels->freqs);
+    free(labels);
 }
 
 void cft_fasttext_quantize(fasttext_t* handle, fasttext_args_t* args, char** errptr) {

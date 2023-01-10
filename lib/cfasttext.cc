@@ -591,9 +591,13 @@ void cft_autotune_free(fasttext_autotune_t* handle) {
     delete x;
 }
 
-void cft_autotune_train(fasttext_autotune_t* handle, fasttext_args_t* args) {
+void cft_autotune_train(fasttext_autotune_t* handle, fasttext_args_t* args, char** errptr) {
     Args* a = (Args*)args;
-    ((Autotune*)handle)->train(*a);
+    try {
+        ((Autotune*)handle)->train(*a);
+    } catch (const std::invalid_argument& e) {
+        save_error(errptr, e);
+    }
 }
 
 #ifdef __cplusplus

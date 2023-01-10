@@ -189,7 +189,7 @@ CFASTTEXT_API void cft_fasttext_get_sentence_vector(fasttext_t* handle, const ch
 /* autotune APIs */
 CFASTTEXT_API fasttext_autotune_t* cft_autotune_new(fasttext_t *handle);
 CFASTTEXT_API void cft_autotune_free(fasttext_autotune_t* handle);
-CFASTTEXT_API void cft_autotune_train(fasttext_autotune_t* handle, fasttext_args_t* args);
+CFASTTEXT_API void cft_autotune_train(fasttext_autotune_t* handle, fasttext_args_t* args, char** errptr);
 
 #ifdef __cplusplus
 }
